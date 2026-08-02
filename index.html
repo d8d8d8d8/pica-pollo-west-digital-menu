@@ -263,6 +263,19 @@
 
 
 <script>
+const catnav = document.getElementById('catnav');
+      
+      window.addEventListener('scroll', () => {
+        const activeChip = catnav.querySelector('.chip.active');
+        if (activeChip) {
+          const scrollLeftPosition = activeChip.offsetLeft - (catnav.offsetWidth / 2) + (activeChip.offsetWidth / 2);
+          catnav.scrollTo({
+            left: scrollLeftPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+  
   // ---------- FLAME ICON ----------
   const flameSVG = (active) => `<svg viewBox="0 0 24 24" fill="${active ? 'var(--red)' : 'var(--card-line)'}"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.5-2-1-3 2 1 3 3 3 6a6 6 0 0 1-12 0c0-4 2-6 4-10z"/></svg>`;
   function picaMeter(level){
