@@ -346,20 +346,20 @@ const catnav = document.getElementById('catnav');
     }
   }
 
-// ---------- category nav active state + scroll spy ----------
+// ---------- category nav active state + scroll spy (Mobile friendly) ----------
   const chips = document.querySelectorAll('.chip');
-  let isScrollingByClick = false; // Bandera para bloquear el observer temporalmente
+  let isScrollingByClick = false;
+  let scrollTimeout = null;
 
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
-      // 1. Activamos el bloqueo para que el scroll por click mande
       isScrollingByClick = true;
 
-      // 2. Limpiamos y marcamos inmediatamente el chip presionado
+      // 1. Limpiamos y activamos el chip seleccionado al instante
       chips.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
 
-      // 3. Centramos el chip en la barra
+      // 2. Centramos el chip en la barra
       const catnav = document.getElementById('catnav');
       if (catnav) {
         const scrollLeftPosition = chip.offsetLeft - (catnav.offsetWidth / 2) + (chip.offsetWidth / 2);
@@ -369,33 +369,40 @@ const catnav = document.getElementById('catnav');
         });
       }
 
-      // 4. Hacemos scroll hacia la sección
-      document.getElementById(chip.dataset.target).scrollIntoView({ behavior: 'smooth' });
+      // 3. Movemos la vista a la sección
+      const targetSection = document.getElementById(chip.dataset.target);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
 
-      // 5. Liberamos el bloqueo cuando termine el movimiento (aprox 600ms)
-      setTimeout(() => {
-        isScrollingByClick = false;
-      }, 600);
+      // 4. Limpiamos cualquier temporizador anterior y esperamos a que el scroll de la ventana se DETENGA por completo
+      clearTimeout(scrollTimeout);
+      
+      // Monitoreamos cuando el scroll deja de moverse (funciona perfecto en móviles)
+      const checkIfScrollFinished = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isScrollingByClick = false; // Liberamos el observer solo cuando el usuario ya llegó a su destino
+        }, 150);
+      };
+
+      window.addEventListener('scroll', checkIfScrollFinished, { once: true });
     });
   });
 
   const sections = ['combos','pollo','hamburguesas','acompanantes','bebidas'].map(id => document.getElementById(id));
   
   const spy = new IntersectionObserver((entries) => {
-    // Si estamos haciendo clic para movernos, ignoramos el observer
-    if (isScrollingByClick) return;
+    if (isScrollingByClick) return; // Si el usuario hizo clic, ignoramos las secciones intermedias en el móvil
 
     entries.forEach(entry => {
       if(entry.isIntersecting){
-        // Quitamos la clase 'active' de TODOS
         chips.forEach(c => c.classList.remove('active'));
 
-        // Activamos únicamente el de la sección actual en pantalla
         const activeChip = document.querySelector(`.chip[data-target="${entry.target.id}"]`);
         if (activeChip) {
           activeChip.classList.add('active');
 
-          // Movemos la barra de categorías
           const catnav = document.getElementById('catnav');
           if (catnav) {
             const scrollLeftPosition = activeChip.offsetLeft - (catnav.offsetWidth / 2) + (activeChip.offsetWidth / 2);
