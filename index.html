@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Pica Pollo West — Menú</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Anton&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --black:#120c0a;
@@ -27,7 +27,7 @@
     color:var(--cream);
     font-family:'Poppins',sans-serif;
     -webkit-font-smoothing:antialiased;
-    padding-bottom:calc(90px + env(safe-area-inset-bottom));
+    padding-bottom:env(safe-area-inset-bottom);
     overflow-x:hidden;
     width:100%;
   }
@@ -35,7 +35,7 @@
   ::selection{background:var(--red); color:var(--cream);}
 
   /* ---------- utility ---------- */
-  .display{font-family:'Bungee', cursive; letter-spacing:.5px;}
+  .display{font-family:'Anton', sans-serif; letter-spacing:1px; text-transform:uppercase;}
   .impact{font-family:'Anton', sans-serif; letter-spacing:.5px; text-transform:uppercase;}
   .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
 
@@ -53,101 +53,13 @@
   .brand{display:flex; align-items:center; gap:8px; min-width:0;}
   .brand img{height:32px; width:auto; display:block; flex:0 0 auto;}
   .brand-text{display:flex; flex-direction:column; line-height:1; min-width:0;}
-  .brand-text .name{font-family:'Bungee'; font-size:.82rem; color:var(--cream); white-space:nowrap;}
+  .brand-text .name{font-family:'Anton'; font-size:1.05rem; letter-spacing:.4px; color:var(--cream); white-space:nowrap;}
   .brand-text .sub{font-size:.56rem; color:var(--gold); letter-spacing:1.2px; text-transform:uppercase; margin-top:3px; white-space:nowrap;}
 
-  .cart-pill{
-    display:flex; align-items:center; gap:6px;
-    background:var(--red);
-    color:#fff;
-    border:none; cursor:pointer;
-    padding:10px 14px;
-    min-height:44px;
-    border-radius:999px;
-    font-family:'Poppins'; font-weight:700; font-size:.8rem;
-    box-shadow: 0 4px 14px rgba(226,35,26,.4);
-    transition:transform .15s ease, box-shadow .15s ease;
-    flex:0 0 auto;
-    white-space:nowrap;
-  }
-  .cart-pill:active{transform:scale(.96);}
-  .cart-count{
-    background:var(--black); color:var(--gold);
-    min-width:20px; height:20px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:.72rem; font-weight:800;
-  }
-
-  /* ---------- hero ---------- */
-  .hero{
-    position:relative;
-    padding:44px 18px 40px;
-    text-align:center;
-    overflow:hidden;
-    background:
-      radial-gradient(ellipse 60% 55% at 50% 18%, rgba(226,35,26,.35), transparent 65%),
-      radial-gradient(ellipse 80% 40% at 80% 100%, rgba(242,166,60,.12), transparent 60%),
-      var(--black);
-  }
-  .flame-bg{
-    position:absolute; inset:0; pointer-events:none; opacity:.5;
-    background-image:
-      radial-gradient(circle, var(--red) 0 2px, transparent 3px);
-    background-size: 46px 46px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent 70%);
-    animation: drift 14s linear infinite;
-  }
-  @keyframes drift{ from{background-position:0 0;} to{background-position:0 -400px;} }
-
-  .eyebrow{
-    position:relative; z-index:2;
-    display:inline-flex; align-items:center; gap:8px;
-    background:rgba(226,35,26,.12);
-    border:1px solid rgba(226,35,26,.45);
-    color:var(--gold-light);
-    padding:6px 14px; border-radius:999px;
-    font-size:.72rem; letter-spacing:2px; text-transform:uppercase; font-weight:600;
-    margin-bottom:22px;
-  }
-  .hero h1{
-    position:relative; z-index:2;
-    font-size:clamp(2.6rem, 8vw, 5.2rem);
-    line-height:.95;
-    color:var(--cream);
-    text-shadow: 0 0 40px rgba(226,35,26,.5);
-  }
-  .hero h1 span{color:var(--red);}
-  .hero p.tag{
-    position:relative; z-index:2;
-    max-width:520px; margin:22px auto 0;
-    color:var(--cream-dim);
-    font-size:1.02rem;
-    line-height:1.55;
-  }
-  .hero-cta{
-    position:relative; z-index:2;
-    margin-top:28px;
-    display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
-    width:100%;
-  }
-  .btn{
-    font-family:'Anton'; letter-spacing:.5px; text-transform:uppercase;
-    font-size:.9rem;
-    padding:15px 24px;
-    min-height:48px;
-    border-radius:10px;
-    border:2px solid transparent;
-    cursor:pointer;
-    transition:transform .15s ease;
-    flex:1 1 200px;
-  }
-  .btn:active{transform:scale(.97);}
-  .btn-primary{background:var(--red); color:#fff; box-shadow:0 8px 24px rgba(226,35,26,.35);}
-  .btn-ghost{background:transparent; color:var(--gold-light); border-color:var(--gold-light);}
 
   /* ---------- category nav ---------- */
   .catnav-wrap{
-    position:sticky; top:63px; z-index:40;
+    position:sticky; top:54px; z-index:40;
     background:rgba(18,12,10,.96);
     border-bottom:1px solid var(--card-line);
   }
@@ -238,43 +150,11 @@
   .pica-meter svg{width:13px; height:13px;}
 
   .card-footer{
-    display:flex; align-items:center; justify-content:space-between;
+    display:flex; align-items:center;
     margin-top:6px;
   }
   .price{font-family:'Anton'; font-size:1.15rem; color:var(--gold);}
   .price small{font-size:.62rem; color:var(--cream-dim); font-family:'Poppins'; font-weight:500;}
-
-  .add-btn{
-    background:transparent;
-    border:2px solid var(--red);
-    color:var(--red);
-    width:44px; height:44px;
-    border-radius:50%;
-    font-size:1.3rem;
-    font-weight:700;
-    cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:.15s ease;
-    flex:0 0 auto;
-  }
-  .add-btn:hover{background:var(--red); color:#fff;}
-  .add-btn:active{transform:scale(.9);}
-
-  .qty-control{
-    display:flex; align-items:center; gap:10px;
-    background:var(--black-2);
-    border-radius:999px;
-    padding:5px 8px;
-    flex:0 0 auto;
-  }
-  .qty-control button{
-    width:32px; height:32px; border-radius:50%;
-    border:none; background:var(--red); color:#fff;
-    font-weight:800; cursor:pointer; font-size:1.1rem;
-    display:flex; align-items:center; justify-content:center;
-    flex:0 0 auto;
-  }
-  .qty-control span{font-family:'Anton'; min-width:16px; text-align:center; font-size:.95rem;}
 
   /* ---------- footer ---------- */
   footer{
@@ -292,84 +172,6 @@
     padding:6px 12px; border-radius:999px;
   }
 
-  /* ---------- floating cart bar ---------- */
-  .cartbar{
-    position:fixed; left:0; right:0; bottom:0; z-index:60;
-    background:linear-gradient(180deg, transparent, rgba(0,0,0,.4) 8%, var(--black-2) 30%);
-    padding:14px 16px calc(18px + env(safe-area-inset-bottom));
-    display:flex; justify-content:center;
-    transform:translateY(120%);
-    transition:transform .35s cubic-bezier(.2,.9,.3,1.2);
-    pointer-events:none;
-  }
-  .cartbar.show{transform:translateY(0); pointer-events:auto;}
-  .cartbar-inner{
-    width:100%; max-width:640px;
-    background:var(--red);
-    color:#fff;
-    border-radius:16px;
-    padding:14px 20px;
-    display:flex; align-items:center; justify-content:space-between;
-    box-shadow:0 12px 30px rgba(226,35,26,.45);
-    cursor:pointer;
-  }
-  .cartbar-inner .left{display:flex; align-items:center; gap:10px;}
-  .cartbar-inner .left .n{
-    background:#fff; color:var(--red); font-family:'Anton'; font-weight:800;
-    width:28px; height:28px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center; font-size:.85rem;
-  }
-  .cartbar-inner .mid{font-family:'Anton'; text-transform:uppercase; font-size:.95rem;}
-  .cartbar-inner .total{font-family:'Anton'; font-size:1.1rem;}
-
-  /* ---------- cart drawer ---------- */
-  .overlay{
-    position:fixed; inset:0; background:rgba(0,0,0,.6);
-    opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:70;
-  }
-  .overlay.show{opacity:1; pointer-events:auto;}
-  .drawer{
-    position:fixed; top:0; right:0; bottom:0; width:min(420px, 92vw);
-    background:var(--black-2);
-    border-left:1px solid var(--card-line);
-    z-index:80;
-    transform:translateX(100%);
-    transition:transform .3s cubic-bezier(.2,.9,.3,1.1);
-    display:flex; flex-direction:column;
-  }
-  .drawer.show{transform:translateX(0);}
-  .drawer-head{
-    padding:20px; border-bottom:1px solid var(--card-line);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .drawer-head h3{font-family:'Anton'; text-transform:uppercase; color:var(--cream);}
-  .drawer-head button{background:none; border:none; color:var(--cream-dim); font-size:1.4rem; cursor:pointer;}
-  .drawer-items{flex:1; overflow-y:auto; padding:14px 20px;}
-  .drawer-item{
-    display:flex; align-items:center; gap:12px;
-    padding:12px 0; border-bottom:1px solid var(--card-line);
-  }
-  .drawer-item img{width:52px; height:52px; object-fit:cover; border-radius:10px;}
-  .drawer-item .info{flex:1;}
-  .drawer-item .info h4{font-size:.88rem; color:var(--cream);}
-  .drawer-item .info .p{font-size:.78rem; color:var(--gold); font-family:'Anton'; margin-top:2px;}
-  .drawer-empty{
-    text-align:center; padding:60px 20px; color:var(--cream-dim); font-size:.9rem;
-  }
-  .drawer-foot{
-    padding:18px 20px calc(22px + env(safe-area-inset-bottom)); border-top:1px solid var(--card-line);
-  }
-  .drawer-foot .row{
-    display:flex; justify-content:space-between; margin-bottom:14px;
-    font-family:'Anton'; text-transform:uppercase; color:var(--cream); font-size:1.05rem;
-  }
-  .drawer-foot .row span:last-child{color:var(--gold);}
-  .drawer-foot button{
-    width:100%; padding:15px; border:none; border-radius:12px;
-    background:var(--red); color:#fff; font-family:'Anton'; text-transform:uppercase;
-    font-size:.95rem; letter-spacing:.5px; cursor:pointer;
-  }
-  .drawer-foot .hint{font-size:.7rem; color:var(--cream-dim); text-align:center; margin-top:10px;}
 </style>
 </head>
 <body>
@@ -384,23 +186,8 @@
           <span class="sub">Caribbean Fried Chicken</span>
         </div>
       </div>
-      <button class="cart-pill" onclick="openDrawer()">
-        🛒 Mi antojo <span class="cart-count" id="cartCountTop">0</span>
-      </button>
     </div>
   </div>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="flame-bg"></div>
-    <span class="eyebrow">🔥 Pica pollo dominicano desde el barrio</span>
-    <h1 class="display">¿SE TE<br><span>ANTOJÓ</span> ALGO?</h1>
-    <p class="tag">Pollo bien crocante, papas recién salidas del caldero y ese sabor de esquina que no se inventa. Arma tu combo y dale al antojo.</p>
-    <div class="hero-cta">
-      <button class="btn btn-primary" onclick="document.getElementById('pollo').scrollIntoView({behavior:'smooth'})">Ver el menú</button>
-      <button class="btn btn-ghost" onclick="document.getElementById('combos').scrollIntoView({behavior:'smooth'})">Combos del día</button>
-    </div>
-  </section>
 
   <!-- CATEGORY NAV -->
   <div class="catnav-wrap">
@@ -479,33 +266,6 @@
     </div>
   </footer>
 
-  <!-- FLOATING CART BAR -->
-  <div class="cartbar" id="cartbar" onclick="openDrawer()">
-    <div class="cartbar-inner">
-      <div class="left">
-        <span class="n" id="cartCountBottom">0</span>
-        <span class="mid">Ver mi antojo</span>
-      </div>
-      <span class="total" id="cartTotalBottom">RD$0</span>
-    </div>
-  </div>
-
-  <!-- DRAWER -->
-  <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
-  <div class="drawer" id="drawer">
-    <div class="drawer-head">
-      <h3>Tu antojo 🔥</h3>
-      <button onclick="closeDrawer()">✕</button>
-    </div>
-    <div class="drawer-items" id="drawerItems">
-      <div class="drawer-empty">Todavía no has agregado nada.<br>¡Anímate, se te va a antojar algo!</div>
-    </div>
-    <div class="drawer-foot">
-      <div class="row"><span>Total</span><span id="drawerTotal">RD$0</span></div>
-      <button onclick="checkout()">Pedir ahora</button>
-      <p class="hint">Menú demostrativo — no se procesan pagos reales</p>
-    </div>
-  </div>
 
 <script>
   // ---------- FLAME ICON ----------
@@ -550,7 +310,6 @@
   };
 
   // ---------- RENDER ----------
-  const cart = {}; // id -> {item, qty}
 
   function fmt(n){ return 'RD$' + n.toLocaleString('es-DO'); }
 
@@ -566,10 +325,7 @@
         <p>${item.desc}</p>
         ${picaMeter(item.pica)}
         <div class="card-footer">
-          <div class="price">${fmt(item.price)}<br><small>por orden</small></div>
-          <div id="ctrl-${item.id}">
-            <button class="add-btn" onclick="addItem('${item.id}')">+</button>
-          </div>
+          <div class="price">${fmt(item.price)}</div>
         </div>
       </div>
     </div>`;
@@ -580,98 +336,6 @@
       const el = document.getElementById('grid-' + cat);
       el.innerHTML = MENU[cat].map(renderCard).join('');
     }
-  }
-
-  function findItem(id){
-    for(const cat in MENU){
-      const found = MENU[cat].find(i => i.id === id);
-      if(found) return found;
-    }
-  }
-
-  function addItem(id){
-    if(!cart[id]) cart[id] = { item: findItem(id), qty: 0 };
-    cart[id].qty++;
-    updateCartUI();
-  }
-  function changeQty(id, delta){
-    if(!cart[id]) return;
-    cart[id].qty += delta;
-    if(cart[id].qty <= 0) delete cart[id];
-    updateCartUI();
-  }
-
-  function updateCartUI(){
-    let count = 0, total = 0;
-    for(const id in cart){
-      count += cart[id].qty;
-      total += cart[id].qty * cart[id].item.price;
-      const ctrl = document.getElementById('ctrl-' + id);
-      if(ctrl){
-        ctrl.innerHTML = `
-          <div class="qty-control">
-            <button onclick="changeQty('${id}', -1)">−</button>
-            <span>${cart[id].qty}</span>
-            <button onclick="changeQty('${id}', 1)">+</button>
-          </div>`;
-      }
-    }
-    // reset controls for items removed from cart
-    document.querySelectorAll('[id^="ctrl-"]').forEach(ctrl => {
-      const id = ctrl.id.replace('ctrl-', '');
-      if(!cart[id]){
-        ctrl.innerHTML = `<button class="add-btn" onclick="addItem('${id}')">+</button>`;
-      }
-    });
-
-    document.getElementById('cartCountTop').textContent = count;
-    document.getElementById('cartCountBottom').textContent = count;
-    document.getElementById('cartTotalBottom').textContent = fmt(total);
-    document.getElementById('drawerTotal').textContent = fmt(total);
-
-    const bar = document.getElementById('cartbar');
-    if(count > 0) bar.classList.add('show'); else bar.classList.remove('show');
-
-    renderDrawerItems();
-  }
-
-  function renderDrawerItems(){
-    const wrap = document.getElementById('drawerItems');
-    const ids = Object.keys(cart);
-    if(ids.length === 0){
-      wrap.innerHTML = `<div class="drawer-empty">Todavía no has agregado nada.<br>¡Anímate, se te va a antojar algo!</div>`;
-      return;
-    }
-    wrap.innerHTML = ids.map(id => {
-      const { item, qty } = cart[id];
-      return `
-      <div class="drawer-item">
-        <img src="${item.img}" alt="${item.name}">
-        <div class="info">
-          <h4>${item.name}</h4>
-          <div class="p">${fmt(item.price)} × ${qty}</div>
-        </div>
-        <div class="qty-control">
-          <button onclick="changeQty('${id}', -1)">−</button>
-          <span>${qty}</span>
-          <button onclick="changeQty('${id}', 1)">+</button>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  function openDrawer(){
-    document.getElementById('drawer').classList.add('show');
-    document.getElementById('overlay').classList.add('show');
-  }
-  function closeDrawer(){
-    document.getElementById('drawer').classList.remove('show');
-    document.getElementById('overlay').classList.remove('show');
-  }
-  function checkout(){
-    const count = Object.values(cart).reduce((a,c) => a + c.qty, 0);
-    if(count === 0){ return; }
-    alert('¡Gracias por tu antojo! 🔥 Este es un menú de demostración, así que aquí terminaría el pedido — pero ya casi puedes probar el pollo.');
   }
 
   // ---------- category nav active state + scroll spy ----------
@@ -692,7 +356,6 @@
   sections.forEach(s => spy.observe(s));
 
   renderAll();
-  updateCartUI();
 </script>
 </body>
 </html>
