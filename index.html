@@ -346,77 +346,79 @@ const catnav = document.getElementById('catnav');
     }
   }
 
-// ---------- category nav active state + scroll spy (Mobile friendly) ----------
+// ---------- category nav active state + scroll spy definitivo (Móvil y PC) ----------
   const chips = document.querySelectorAll('.chip');
-  let isScrollingByClick = false;
-  let scrollTimeout = null;
+  const catnav = document.getElementById('catnav');
+  const sections = ['combos', 'pollo', 'hamburguesas', 'acompanantes', 'bebidas']
+    .map(id => document.getElementById(id))
+    .filter(Boolean); // Asegura que existan
 
+  let isManualScrolling = false;
+
+  // 1. Control al hacer clic en un chip
   chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      isScrollingByClick = true;
+    chip.addEventListener('click', (e) => {
+      e.preventDefault();
+      isManualScrolling = true;
 
-      // 1. Limpiamos y activamos el chip seleccionado al instante
+      // Limpiamos y marcamos inmediatamente solo este chip
       chips.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
 
-      // 2. Centramos el chip en la barra
-      const catnav = document.getElementById('catnav');
-      if (catnav) {
-        const scrollLeftPosition = chip.offsetLeft - (catnav.offsetWidth / 2) + (chip.offsetWidth / 2);
-        catnav.scrollTo({
-          left: scrollLeftPosition,
+      // Centramos el chip en la barra superior
+      const scrollLeftPosition = chip.offsetLeft - (catnav.offsetWidth / 2) + (chip.offsetWidth / 2);
+      catnav.scrollTo({
+        left: scrollLeftPosition,
+        behavior: 'smooth'
+      });
+
+      // Desplazamos la página a la sección correspondiente
+      const targetId = chip.dataset.target;
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        const topPos = targetSection.offsetTop - 120; // Ajuste por la altura de las barras sticky
+        window.scrollTo({
+          top: topPos,
           behavior: 'smooth'
         });
       }
 
-      // 3. Movemos la vista a la sección
-      const targetSection = document.getElementById(chip.dataset.target);
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: 'smooth' });
-      }
-
-      // 4. Limpiamos cualquier temporizador anterior y esperamos a que el scroll de la ventana se DETENGA por completo
-      clearTimeout(scrollTimeout);
-      
-      // Monitoreamos cuando el scroll deja de moverse (funciona perfecto en móviles)
-      const checkIfScrollFinished = () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          isScrollingByClick = false; // Liberamos el observer solo cuando el usuario ya llegó a su destino
-        }, 150);
-      };
-
-      window.addEventListener('scroll', checkIfScrollFinished, { once: true });
+      // Liberamos el bloqueo después de que termine la animación de desplazamiento
+      setTimeout(() => {
+        isManualScrolling = false;
+      }, 700);
     });
   });
 
-  const sections = ['combos','pollo','hamburguesas','acompanantes','bebidas'].map(id => document.getElementById(id));
-  
-  const spy = new IntersectionObserver((entries) => {
-    if (isScrollingByClick) return; // Si el usuario hizo clic, ignoramos las secciones intermedias en el móvil
+  // 2. Control al hacer scroll manual (dedo o mouse)
+  window.addEventListener('scroll', () => {
+    if (isManualScrolling) return; // Si el usuario hizo clic, ignoramos el scroll automático
 
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        chips.forEach(c => c.classList.remove('active'));
+    const scrollPos = window.scrollY + 140; // Margen de detección superior
 
-        const activeChip = document.querySelector(`.chip[data-target="${entry.target.id}"]`);
-        if (activeChip) {
-          activeChip.classList.add('active');
+    let currentSectionId = sections[0]?.id;
 
-          const catnav = document.getElementById('catnav');
-          if (catnav) {
-            const scrollLeftPosition = activeChip.offsetLeft - (catnav.offsetWidth / 2) + (activeChip.offsetWidth / 2);
-            catnav.scrollTo({
-              left: scrollLeftPosition,
-              behavior: 'smooth'
-            });
-          }
-        }
+    sections.forEach(section => {
+      if (section.offsetTop <= scrollPos) {
+        currentSectionId = section.id;
       }
     });
-  }, { rootMargin: '-40% 0px -55% 0px' });
 
-  sections.forEach(s => spy.observe(s));
+    if (currentSectionId) {
+      chips.forEach(c => {
+        const isActive = c.dataset.target === currentSectionId;
+        c.classList.toggle('active', isActive);
+
+        if (isActive) {
+          const scrollLeftPosition = c.offsetLeft - (catnav.offsetWidth / 2) + (c.offsetWidth / 2);
+          catnav.scrollTo({
+            left: scrollLeftPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    }
+  }, { passive: true });
 
   renderAll();
 </script>
