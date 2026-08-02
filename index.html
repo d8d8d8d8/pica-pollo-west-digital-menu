@@ -346,79 +346,60 @@ const catnav = document.getElementById('catnav');
     }
   }
 
-// ---------- category nav active state + scroll spy definitivo (Móvil y PC) ----------
+// ---------- category nav active state + scroll spy optimizado para móviles ----------
   const chips = document.querySelectorAll('.chip');
-  const catnav = document.getElementById('catnav');
-  const sections = ['combos', 'pollo', 'hamburguesas', 'acompanantes', 'bebidas']
-    .map(id => document.getElementById(id))
-    .filter(Boolean); // Asegura que existan
-
+  const sections = ['combos','pollo','hamburguesas','acompanantes','bebidas'].map(id => document.getElementById(id));
   let isManualScrolling = false;
 
-  // 1. Control al hacer clic en un chip
   chips.forEach(chip => {
     chip.addEventListener('click', (e) => {
       e.preventDefault();
       isManualScrolling = true;
 
-      // Limpiamos y marcamos inmediatamente solo este chip
+      // 1. Limpiamos y activamos el chip actual
       chips.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
 
-      // Centramos el chip en la barra superior
-      const scrollLeftPosition = chip.offsetLeft - (catnav.offsetWidth / 2) + (chip.offsetWidth / 2);
-      catnav.scrollTo({
-        left: scrollLeftPosition,
-        behavior: 'smooth'
-      });
+      // 2. Movimiento fluido nativo de la barra hacia el chip seleccionado (Centrado perfecto en móvil)
+      chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
 
-      // Desplazamos la página a la sección correspondiente
-      const targetId = chip.dataset.target;
-      const targetSection = document.getElementById(targetId);
+      // 3. Desplazamiento hacia la sección
+      const targetSection = document.getElementById(chip.dataset.target);
       if (targetSection) {
-        const topPos = targetSection.offsetTop - 120; // Ajuste por la altura de las barras sticky
+        const topPos = targetSection.offsetTop - 110;
         window.scrollTo({
           top: topPos,
           behavior: 'smooth'
         });
       }
 
-      // Liberamos el bloqueo después de que termine la animación de desplazamiento
+      // 4. Liberamos el bloqueo al terminar
       setTimeout(() => {
         isManualScrolling = false;
       }, 700);
     });
   });
 
-  // 2. Control al hacer scroll manual (dedo o mouse)
-  window.addEventListener('scroll', () => {
-    if (isManualScrolling) return; // Si el usuario hizo clic, ignoramos el scroll automático
+  const spy = new IntersectionObserver((entries) => {
+    if (isManualScrolling) return;
 
-    const scrollPos = window.scrollY + 140; // Margen de detección superior
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        chips.forEach(c => c.classList.remove('active'));
 
-    let currentSectionId = sections[0]?.id;
-
-    sections.forEach(section => {
-      if (section.offsetTop <= scrollPos) {
-        currentSectionId = section.id;
+        const activeChip = document.querySelector(`.chip[data-target="${entry.target.id}"]`);
+        if (activeChip) {
+          activeChip.classList.add('active');
+          // Movimiento fluido automático al hacer scroll con el dedo
+          activeChip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
       }
     });
+  }, { rootMargin: '-35% 0px -55% 0px' });
 
-    if (currentSectionId) {
-      chips.forEach(c => {
-        const isActive = c.dataset.target === currentSectionId;
-        c.classList.toggle('active', isActive);
-
-        if (isActive) {
-          const scrollLeftPosition = c.offsetLeft - (catnav.offsetWidth / 2) + (c.offsetWidth / 2);
-          catnav.scrollTo({
-            left: scrollLeftPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
-    }
-  }, { passive: true });
+  sections.forEach(s => {
+    if (s) spy.observe(s);
+  });
 
   renderAll();
 </script>
